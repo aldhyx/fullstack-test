@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "./store";
 
 interface UserState {
-  data: User | null;
+  data: (User & { token: string }) | null;
   loading: boolean;
   error: string | null;
 }
@@ -23,7 +23,7 @@ const userSlice = createSlice({
       state.loading = true;
       state.error = null;
     },
-    fetchUserSuccess(state, action: PayloadAction<User>) {
+    fetchUserSuccess(state, action: PayloadAction<UserState["data"]>) {
       state.data = action.payload;
       state.loading = false;
       state.error = null;

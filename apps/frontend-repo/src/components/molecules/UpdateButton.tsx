@@ -1,12 +1,12 @@
 "use client";
 
 import { Button, Typography, Grid2 } from "@mui/material";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../store/store";
+import { useDispatch } from "react-redux";
 import {
   fetchUserFailure,
   fetchUserStart,
   fetchUserSuccess,
+  useUser,
 } from "@/store/userSlice";
 import { fetchUser } from "@/apis/userApi";
 import { getErrorMessage } from "@/lib/utils";
@@ -14,11 +14,7 @@ import { getErrorMessage } from "@/lib/utils";
 export const UpdateButton = () => {
   const dispatch = useDispatch();
 
-  const {
-    loading,
-    data: user,
-    error,
-  } = useSelector((state: RootState) => state.user);
+  const { loading, user, error } = useUser();
 
   const handleFetchUser = async () => {
     if (!user?.uid) return;
@@ -26,7 +22,7 @@ export const UpdateButton = () => {
     dispatch(fetchUserStart());
     try {
       const userData = await fetchUser(user.uid, user.token);
-      dispatch(fetchUserSuccess(userData));
+      dispatch(fetchUserSuccess({ ...userData, token: user.token }));
     } catch (error) {
       dispatch(fetchUserFailure(getErrorMessage(error)));
     }

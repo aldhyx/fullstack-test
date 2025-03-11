@@ -2,7 +2,7 @@ import type { User } from "@ebuddy/shared";
 
 const BASE_URL =
   process.env.NODE_ENV === "development"
-    ? "http://localhost:3001" // Local BE URL
+    ? "http://localhost:3002" // Local BE URL
     : "https://your-production-url.com/api";
 
 export const fetchUser = async (uid: string, token: string): Promise<User> => {
