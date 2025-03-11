@@ -37,11 +37,14 @@ export const RegisterForm = () => {
           values.password
         );
 
+        const token = await user.getIdToken();
+
         dispatch(
           fetchUserSuccess({
             uid: user.uid,
             email: user.email,
             name: user.displayName,
+            token,
           })
         );
 
